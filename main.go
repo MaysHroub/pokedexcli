@@ -3,10 +3,24 @@ package main
 import (
   "fmt"
   "strings"
+  "bufio"
+  "os"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+  scanner := bufio.NewScanner(os.Stdin)
+
+  for {
+    fmt.Print("Pokedex > ")
+    
+    if !scanner.Scan() {
+      break
+    }  
+  
+    input := strings.TrimSpace(scanner.Text())
+    words := cleanInput(input)
+    fmt.Println("Your command was: " + words[0])
+  }  
 }
 
 
