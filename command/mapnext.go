@@ -15,13 +15,15 @@ func MapNext(c *configuration.UrlConfig) error {
 
 	httpClient := pokeapi.NewClient()
 
-	locationAreas, err := httpClient.GetLocationAreas(*url)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(*url)
 
 	if err != nil {
 		return err
 	}
 
-	for _, loc := range locationAreas {
+	c.Next = locationAreaResp.Next
+
+	for _, loc := range locationAreaResp.LocationAreas {
 		fmt.Println(loc.Name)
 	}
 

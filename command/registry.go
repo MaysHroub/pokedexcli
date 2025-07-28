@@ -21,12 +21,12 @@ func GetCommands() map[string]CliCommand {
 			Callback:    Help,
 		},
 		"mapn": CliCommand{
-			Name:        "map-next",
+			Name:        "mapn",
 			Description: "Displays next 20 location areas",
 			Callback:    MapNext,
 		},
 		"mapp": CliCommand{
-			Name:        "map-previous",
+			Name:        "mapp",
 			Description: "Displays previous 20 location areas",
 			Callback:    MapPrev,
 		},

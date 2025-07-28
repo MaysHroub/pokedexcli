@@ -13,15 +13,19 @@ func MapPrev(c *configuration.UrlConfig) error {
 		return fmt.Errorf("No more previous locations")
 	}
 
+	c.Prev = url
+
 	httpClient := pokeapi.NewClient()
 
-	locationAreas, err := httpClient.GetLocationAreas(*url)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(*url)
 
 	if err != nil {
 		return err
 	}
 
-	for _, loc := range locationAreas {
+	c.Prev = locationAreaResp.Previous
+
+	for _, loc := range locationAreaResp.LocationAreas {
 		fmt.Println(loc.Name)
 	}
 

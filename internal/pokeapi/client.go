@@ -21,23 +21,23 @@ func NewClient() *Client {
 	}
 }
 
-func (c *Client) GetLocationAreas(url string) ([]LocationArea, error) {
+func (c *Client) GetLocationAreaResponse(url string) (LocationAreaResponse, error) {
 	resp, err := c.instance.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to fetch location areas: %w", err)
+		return LocationAreaResponse{}, fmt.Errorf("Failed to fetch location area response: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("PokeAPI returned status code %d when fetching location areas", resp.StatusCode)
+		return LocationAreaResponse{}, fmt.Errorf("PokeAPI returned status code %d when fetching location area response", resp.StatusCode)
 	}
 
 	decoder := json.NewDecoder(resp.Body)
 	var locAreaResp LocationAreaResponse
 
 	if err := decoder.Decode(&locAreaResp); err != nil {
-		return nil, fmt.Errorf("Failed to decode json response: %w", err)
+		return LocationAreaResponse{}, fmt.Errorf("Failed to decode json response: %w", err)
 	}
 
-	return locAreaResp.LocationAreas, nil
+	return locAreaResp, nil
 }
