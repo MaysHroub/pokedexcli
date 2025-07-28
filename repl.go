@@ -4,12 +4,19 @@ import (
 	"bufio"
 	"fmt"
 	"github/MaysHroub/pokedexcli/command"
+	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/internal/pokeapi"
 	"os"
 	"strings"
 )
 
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
+	locationAreaEndPoint := pokeapi.BaseUrl + "/location-area"
+	config := configuration.UrlConfig{
+		Next: &locationAreaEndPoint,
+		Prev: nil,
+	}
 
 	for {
 		fmt.Print("Pokedex > ")
@@ -34,7 +41,7 @@ func startRepl() {
 			continue
 		}
 
-		cmd.Callback()
+		cmd.Callback(&config)
 
 	}
 }
