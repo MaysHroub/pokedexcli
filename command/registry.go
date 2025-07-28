@@ -1,22 +1,22 @@
 package command
 
-type cliCommand struct {
-	name        string
-	description string
-	callback    func() error
+type CliCommand struct {
+	Name        string
+	Description string
+	Callback    func() error
 }
 
-func GetCommands() map[string]cliCommand {
-	return map[string]cliCommand{
-		"exit": cliCommand{
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    Exit,
+func GetCommands() map[string]CliCommand {
+	return map[string]CliCommand{
+		"exit": CliCommand{
+			Name:        "exit",
+			Description: "Exit the Pokedex",
+			Callback:    Exit,
 		},
-		"help": cliCommand{
-			name: "help"
-			description: "Displays a help message",
-			callback: Help,
+		"help": CliCommand{
+			Name:        "help",
+			Description: "Displays a help message",
+			Callback:    Help,
 		},
 	}
 }

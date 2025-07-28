@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github/MaysHroub/pokedexcli/command"
 	"os"
 	"strings"
 )
@@ -24,7 +25,17 @@ func startRepl() {
 			continue
 		}
 
-		fmt.Println("Your command was: " + words[0])
+		commands := command.GetCommands()
+
+		cmd, exists := commands[words[0]]
+
+		if !exists {
+			fmt.Println("Unknown command: " + words[0])
+			continue
+		}
+
+		cmd.Callback()
+
 	}
 }
 
