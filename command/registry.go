@@ -1,9 +1,11 @@
 package command
 
+import "github/MaysHroub/pokedexcli/configuration"
+
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func() error
+	Callback    func(c *configuration.UrlConfig) error
 }
 
 func GetCommands() map[string]CliCommand {
@@ -17,6 +19,16 @@ func GetCommands() map[string]CliCommand {
 			Name:        "help",
 			Description: "Displays a help message",
 			Callback:    Help,
+		},
+		"mapn": CliCommand{
+			Name:        "map-next",
+			Description: "Displays next 20 location areas",
+			Callback:    MapNext,
+		},
+		"mapp": CliCommand{
+			Name:        "map-previous",
+			Description: "Displays previous 20 location areas",
+			Callback:    MapPrev,
 		},
 	}
 }
