@@ -5,7 +5,7 @@ import (
 	"github/MaysHroub/pokedexcli/configuration"
 )
 
-func MapPrev(cfg *configuration.Config) error {
+func MapPrev(cfg *configuration.Config, param string) error {
 	httpClient := cfg.HttpClient
 
 	locationAreaResp, err := httpClient.GetLocationAreaResponse(cfg.PrevUrl)
