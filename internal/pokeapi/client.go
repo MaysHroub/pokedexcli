@@ -59,10 +59,10 @@ func (c *Client) GetLocationAreaResponse(pageUrl *string) (LocationAreaResponse,
 	return locAreaResp, nil
 }
 
-func (c *Client) GetPokemons(locationArea *string) ([]PokemonEncounters, error) {
+func (c *Client) GetPokemons(locationArea string) ([]PokemonEncounters, error) {
 	url := BaseUrl + "/1"
-	if locationArea != nil {
-		url = BaseUrl + "/" + *locationArea
+	if locationArea != "" {
+		url = BaseUrl + "/" + locationArea
 	}
 
 	data, found := c.cache.Get(url)

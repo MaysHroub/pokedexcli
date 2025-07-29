@@ -8,7 +8,7 @@ import (
 func Explore(cfg *configuration.Config, locationName string) error {
 	client := cfg.HttpClient
 
-	pokemonEncounters, err := client.GetPokemons(&locationName)
+	pokemonEncounters, err := client.GetPokemons(locationName)
 
 	if err != nil {
 		return err

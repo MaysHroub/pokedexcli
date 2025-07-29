@@ -28,17 +28,25 @@ func startRepl(cfg *configuration.Config) {
 
 		commands := command.GetCommands()
 
-		cmd, exists := commands[words[0]]
+		commandName := words[0]
+
+		cmd, exists := commands[commandName]
 
 		if !exists {
-			fmt.Println("Unknown command: " + words[0])
+			fmt.Println("Unknown command: " + commandName)
 			continue
 		}
 
-		err := cmd.Callback(cfg)
+		commandParam := ""
+
+		if len(words) >= 2 {
+			commandParam = words[1]
+		}
+
+		err := cmd.Callback(cfg, commandParam)
 
 		if err != nil {
-			fmt.Printf("An error occured while executing %v: %v\n", words[0], err)
+			fmt.Printf("An error occured while executing %v: %v\n", commandName, err)
 		}
 
 	}
