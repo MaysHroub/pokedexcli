@@ -25,3 +25,7 @@ type cacheEntry struct {
 func (c *Cache) Add(key string, data []byte) {
 
 }
+
+func (c *Cache) Get(key string) (data []byte, found bool) {
+	return []byte{}, false
+}

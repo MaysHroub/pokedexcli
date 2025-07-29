@@ -13,9 +13,8 @@ const (
 )
 
 type testCaseCache struct {
-	inputKey           string
-	inputData          []byte
-	expectedAddedEntry cacheEntry
+	inputKey  string
+	inputData []byte
 }
 
 func TestAddCacheEntry(t *testing.T) {
@@ -23,10 +22,14 @@ func TestAddCacheEntry(t *testing.T) {
 		testCaseCache{
 			inputKey:  "some-url",
 			inputData: []byte{1, 2, 3, 4, 5},
-			expectedAddedEntry: cacheEntry{
-				createdAt: time.Now(),
-				data:      []byte{1, 2, 3, 4, 5},
-			},
+		},
+		testCaseCache{
+			inputKey:  "",
+			inputData: []byte{1, 2, 3, 4, 5},
+		},
+		testCaseCache{
+			inputKey:  "some-url-2",
+			inputData: []byte{},
 		},
 	}
 
@@ -34,17 +37,15 @@ func TestAddCacheEntry(t *testing.T) {
 
 	for _, c := range cases {
 		cache.Add(c.inputKey, c.inputData)
+		outputData, isFound := cache.Get(c.inputKey)
 
-		if len(cache.CacheEntries) == 0 {
-			t.Error(RED + "Failed to add a cache entry. The cache is empty!" + RESET)
+		if !isFound {
+			t.Errorf(RED+"Failed to retrieve cache entry whose key is %v"+RESET, c.inputKey)
 			continue
 		}
 
-		addedCacheEntry := cache.CacheEntries[c.inputKey]
-
-		if !bytes.Equal(c.expectedAddedEntry.data, addedCacheEntry.data) {
-			t.Errorf(RED+"Failed to add a cache entry. Expected data: %v, but got: %v"+RESET, c.expectedAddedEntry, addedCacheEntry.data)
-			continue
+		if !bytes.Equal(outputData, c.inputData) {
+			t.Errorf(RED+"The data of retrieved cache entry, whose key is %v, doesn't match expected data. Wanted: %v, but got %v"+RESET, c.inputKey, c.inputData, outputData)
 		}
 	}
 }
