@@ -7,7 +7,8 @@ import (
 
 func Help(c *configuration.Config) error {
 	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:\n")
+	fmt.Println("Usage:")
+	fmt.Println()
 
 	commands := GetCommands()
 
