@@ -41,7 +41,11 @@ func startRepl() {
 			continue
 		}
 
-		cmd.Callback(&config)
+		err := cmd.Callback(&config)
+
+		if err != nil {
+			fmt.Printf("An error occured while executing %v: %v\n", words[0], err)
+		}
 
 	}
 }
