@@ -5,7 +5,7 @@ import "github/MaysHroub/pokedexcli/configuration"
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(c *configuration.Config) error
+	Callback    func(c *configuration.Config, param string) error
 }
 
 func GetCommands() map[string]CliCommand {
@@ -29,6 +29,11 @@ func GetCommands() map[string]CliCommand {
 			Name:        "mapp",
 			Description: "Displays previous 20 location areas",
 			Callback:    MapPrev,
+		},
+		"explore": CliCommand{
+			Name:        "explore <location-area>",
+			Description: "Displays all pokemon names in given location area",
+			Callback:    Explore,
 		},
 	}
 }
