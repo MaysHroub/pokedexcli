@@ -2,6 +2,7 @@ package pokecache
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 	"time"
 )
@@ -12,40 +13,40 @@ const (
 	RESET = "\033[0m"
 )
 
-type testCaseCache struct {
-	inputKey  string
-	inputData []byte
-}
+func TestAddGet(t *testing.T) {
+	const interval = 10 * time.Second
 
-func TestCacheAddGet(t *testing.T) {
-	cases := []testCaseCache{
+	cases := []struct {
+		key string
+		val []byte
+	}{
 		{
-			inputKey:  "some-url",
-			inputData: []byte{1, 2, 3, 4, 5},
+			key: "https://test.com",
+			val: []byte("metadata"),
 		},
 		{
-			inputKey:  "",
-			inputData: []byte{1, 2, 3, 4, 5},
-		},
-		{
-			inputKey:  "some-url-2",
-			inputData: []byte{},
+			key: "https://test.com/some-path",
+			val: []byte("more metadata"),
 		},
 	}
 
-	for _, c := range cases {
-		cache := NewCache(10 * time.Second)
+	for i, c := range cases {
+		t.Run(fmt.Sprintf("Test Case %v", i), func(t *testing.T) {
+			cache := NewCache(interval)
 
-		cache.Add(c.inputKey, c.inputData)
-		outputData, isFound := cache.Get(c.inputKey)
+			cache.Add(c.key, c.val)
+			outputVal, isFound := cache.Get(c.key)
 
-		if !isFound {
-			t.Errorf(RED+"Failed to retrieve cache entry whose key is %v"+RESET, c.inputKey)
-			continue
-		}
+			if !isFound {
+				t.Errorf(RED+"Failed to retrieve cache entry whose key is %v"+RESET, c.key)
+				return
+			}
 
-		if !bytes.Equal(outputData, c.inputData) {
-			t.Errorf(RED+"The data of retrieved cache entry, whose key is %v, doesn't match expected data. Wanted: %v, but got %v"+RESET, c.inputKey, c.inputData, outputData)
-		}
+			if !bytes.Equal(outputVal, c.val) {
+				t.Errorf(RED+"The data of retrieved cache entry, whose key is %v, doesn't match expected data. Wanted: %v, but got %v"+RESET, c.key, c.val, outputVal)
+				return
+			}
+		})
 	}
+
 }
