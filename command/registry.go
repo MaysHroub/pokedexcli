@@ -31,7 +31,7 @@ func GetCommands() map[string]CliCommand {
 			Callback:    MapPrev,
 		},
 		"explore": CliCommand{
-			Name:        "explore <location-area>",
+			Name:        "explore <location-name | location-id>",
 			Description: "Displays all pokemon names in given location area",
 			Callback:    Explore,
 		},

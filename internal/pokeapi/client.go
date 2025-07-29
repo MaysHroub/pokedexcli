@@ -59,10 +59,10 @@ func (c *Client) GetLocationAreaResponse(pageUrl *string) (LocationAreaResponse,
 	return locAreaResp, nil
 }
 
-func (c *Client) GetPokemons(locationArea string) ([]PokemonEncounters, error) {
-	url := BaseUrl + "/1"
-	if locationArea != "" {
-		url = BaseUrl + "/" + locationArea
+func (c *Client) GetPokemons(locationAreaNameOrId string) ([]Pokemon, error) {
+	url := BaseUrl + "/location-area/1"
+	if locationAreaNameOrId != "" {
+		url = BaseUrl + "/location-area/" + locationAreaNameOrId
 	}
 
 	data, found := c.cache.Get(url)
@@ -89,5 +89,11 @@ func (c *Client) GetPokemons(locationArea string) ([]PokemonEncounters, error) {
 		return nil, fmt.Errorf("Failed to parse json: %w", err)
 	}
 
-	return pokemonResp.PokemonEncounters, nil
+	pokemons := make([]Pokemon, len(pokemonResp.PokemonEncounters))
+
+	for i, pokeEnc := range pokemonResp.PokemonEncounters {
+		pokemons[i] = pokeEnc.Pokemon
+	}
+
+	return pokemons, nil
 }
