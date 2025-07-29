@@ -8,7 +8,7 @@ import (
 func MapNext(cfg *configuration.Config) error {
 	httpClient := cfg.HttpClient
 
-	locationAreaResp, err := httpClient.GetLocationAreaResponse(*cfg.NextUrl)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(cfg.NextUrl)
 
 	if err != nil {
 		return err

@@ -5,7 +5,7 @@ import (
 	"github/MaysHroub/pokedexcli/configuration"
 )
 
-func Help(c *configuration.UrlConfig) error {
+func Help(c *configuration.Config) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:\n")
 

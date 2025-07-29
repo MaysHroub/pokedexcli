@@ -8,7 +8,7 @@ import (
 func MapPrev(cfg *configuration.Config) error {
 	httpClient := cfg.HttpClient
 
-	locationAreaResp, err := httpClient.GetLocationAreaResponse(*cfg.PrevUrl)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(cfg.PrevUrl)
 
 	if err != nil {
 		return err

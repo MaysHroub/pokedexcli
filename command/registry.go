@@ -5,7 +5,7 @@ import "github/MaysHroub/pokedexcli/configuration"
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(c *configuration.UrlConfig) error
+	Callback    func(c *configuration.Config) error
 }
 
 func GetCommands() map[string]CliCommand {

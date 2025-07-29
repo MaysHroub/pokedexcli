@@ -35,7 +35,7 @@ func startRepl(cfg *configuration.Config) {
 			continue
 		}
 
-		err := cmd.Callback(&cfg)
+		err := cmd.Callback(cfg)
 
 		if err != nil {
 			fmt.Printf("An error occured while executing %v: %v\n", words[0], err)
