@@ -1,6 +1,9 @@
 package configuration
 
-type UrlConfig struct {
-	Next *string
-	Prev *string
+import "github/MaysHroub/pokedexcli/internal/pokeapi"
+
+type Config struct {
+	HttpClient *pokeapi.Client
+	NextUrl    *string
+	PrevUrl    *string
 }

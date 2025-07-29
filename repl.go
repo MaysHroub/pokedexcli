@@ -5,18 +5,12 @@ import (
 	"fmt"
 	"github/MaysHroub/pokedexcli/command"
 	"github/MaysHroub/pokedexcli/configuration"
-	"github/MaysHroub/pokedexcli/internal/pokeapi"
 	"os"
 	"strings"
 )
 
-func startRepl() {
+func startRepl(cfg *configuration.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
-	locationAreaEndPoint := pokeapi.BaseUrl + "/location-area"
-	config := configuration.UrlConfig{
-		Next: &locationAreaEndPoint,
-		Prev: nil,
-	}
 
 	for {
 		fmt.Print("Pokedex > ")
@@ -41,7 +35,7 @@ func startRepl() {
 			continue
 		}
 
-		err := cmd.Callback(&config)
+		err := cmd.Callback(&cfg)
 
 		if err != nil {
 			fmt.Printf("An error occured while executing %v: %v\n", words[0], err)

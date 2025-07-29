@@ -3,25 +3,19 @@ package command
 import (
 	"fmt"
 	"github/MaysHroub/pokedexcli/configuration"
-	"github/MaysHroub/pokedexcli/internal/pokeapi"
 )
 
-func MapPrev(c *configuration.UrlConfig) error {
-	url := c.Prev
+func MapPrev(cfg *configuration.Config) error {
+	httpClient := cfg.HttpClient
 
-	if url == nil {
-		return fmt.Errorf("No more previous locations")
-	}
-
-	httpClient := pokeapi.NewClient()
-
-	locationAreaResp, err := httpClient.GetLocationAreaResponse(*url)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(*cfg.PrevUrl)
 
 	if err != nil {
 		return err
 	}
 
-	c.Prev = locationAreaResp.Previous
+	cfg.PrevUrl = locationAreaResp.Previous
+	cfg.NextUrl = locationAreaResp.Next
 
 	for _, loc := range locationAreaResp.LocationAreas {
 		fmt.Println(loc.Name)

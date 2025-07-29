@@ -3,25 +3,19 @@ package command
 import (
 	"fmt"
 	"github/MaysHroub/pokedexcli/configuration"
-	"github/MaysHroub/pokedexcli/internal/pokeapi"
 )
 
-func MapNext(c *configuration.UrlConfig) error {
-	url := c.Next
+func MapNext(cfg *configuration.Config) error {
+	httpClient := cfg.HttpClient
 
-	if url == nil {
-		return fmt.Errorf("There are no more location areas")
-	}
-
-	httpClient := pokeapi.NewClient()
-
-	locationAreaResp, err := httpClient.GetLocationAreaResponse(*url)
+	locationAreaResp, err := httpClient.GetLocationAreaResponse(*cfg.NextUrl)
 
 	if err != nil {
 		return err
 	}
 
-	c.Next = locationAreaResp.Next
+	cfg.NextUrl = locationAreaResp.Next
+	cfg.PrevUrl = locationAreaResp.Previous
 
 	for _, loc := range locationAreaResp.LocationAreas {
 		fmt.Println(loc.Name)

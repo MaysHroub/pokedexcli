@@ -8,20 +8,25 @@ import (
 )
 
 type Client struct {
-	instance *http.Client
+	instance http.Client
 }
 
 // factory method
-func NewClient() *Client {
+func NewClient(timeout time.Duration) Client {
 	clientHttp := http.Client{
-		Timeout: 10 * time.Second, // 10 seconds
+		Timeout: timeout,
 	}
-	return &Client{
-		instance: &clientHttp,
+	return Client{
+		instance: clientHttp,
 	}
 }
 
-func (c *Client) GetLocationAreaResponse(url string) (LocationAreaResponse, error) {
+func (c *Client) GetLocationAreaResponse(pageUrl *string) (LocationAreaResponse, error) {
+	url := BaseUrl + "/location-area"
+	if pageUrl != nil {
+		url = *pageUrl
+	}
+
 	resp, err := c.instance.Get(url)
 	if err != nil {
 		return LocationAreaResponse{}, fmt.Errorf("Failed to fetch location area response: %w", err)
