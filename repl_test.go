@@ -1,6 +1,8 @@
-package test
+package main
 
-import "testing"
+import (
+	"testing"
+)
 
 const (
 	RED   = "\033[31m"
