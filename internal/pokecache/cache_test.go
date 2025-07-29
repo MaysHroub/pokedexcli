@@ -50,3 +50,29 @@ func TestAddGet(t *testing.T) {
 	}
 
 }
+
+func TestReapLoop(t *testing.T) {
+	const intervalCacheTime = 5 * time.Millisecond
+	const waitTime = intervalCacheTime + 5*time.Millisecond
+	const key = "http://test.com"
+	val := []byte("test data")
+
+	cache := NewCache(intervalCacheTime)
+
+	cache.Add(key, val)
+
+	_, exists := cache.Get(key)
+	if !exists {
+		t.Errorf(RED+"Failed to get cache entry with key %v"+RESET, key)
+		return
+	}
+
+	time.Sleep(waitTime)
+
+	_, exists = cache.Get(key)
+	if exists {
+		t.Errorf(RED+"Failed to remove entry, with key %v, from cache after the interval"+RESET, key)
+		return
+	}
+
+}
