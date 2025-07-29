@@ -1,19 +1,20 @@
 package pokecache
 
 import (
+	"sync"
 	"time"
 )
 
 type Cache struct {
-	CacheEntries      map[string]cacheEntry
-	CacheEntryTimeout time.Duration
-	// lock sync.Mutex
+	cacheEntries      map[string]cacheEntry
+	cacheEntryTimeout time.Duration
+	mutx              sync.Mutex
 }
 
 func NewCache(cacheTimeout time.Duration) Cache {
 	return Cache{
-		CacheEntries:      make(map[string]cacheEntry),
-		CacheEntryTimeout: cacheTimeout,
+		cacheEntries:      make(map[string]cacheEntry),
+		cacheEntryTimeout: cacheTimeout,
 	}
 }
 
@@ -23,9 +24,20 @@ type cacheEntry struct {
 }
 
 func (c *Cache) Add(key string, data []byte) {
-
+	c.mutx.Lock()
+	c.cacheEntries[key] = cacheEntry{
+		createdAt: time.Now(),
+		data:      data,
+	}
+	c.mutx.Unlock()
 }
 
 func (c *Cache) Get(key string) (data []byte, found bool) {
-	return []byte{}, false
+	entry, found := c.cacheEntries[key]
+
+	if found {
+		return entry.data, true
+	}
+
+	return nil, false
 }

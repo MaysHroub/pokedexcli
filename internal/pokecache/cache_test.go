@@ -17,25 +17,25 @@ type testCaseCache struct {
 	inputData []byte
 }
 
-func TestAddCacheEntry(t *testing.T) {
+func TestCacheAddGet(t *testing.T) {
 	cases := []testCaseCache{
-		testCaseCache{
+		{
 			inputKey:  "some-url",
 			inputData: []byte{1, 2, 3, 4, 5},
 		},
-		testCaseCache{
+		{
 			inputKey:  "",
 			inputData: []byte{1, 2, 3, 4, 5},
 		},
-		testCaseCache{
+		{
 			inputKey:  "some-url-2",
 			inputData: []byte{},
 		},
 	}
 
-	cache := NewCache(10 * time.Second)
-
 	for _, c := range cases {
+		cache := NewCache(10 * time.Second)
+
 		cache.Add(c.inputKey, c.inputData)
 		outputData, isFound := cache.Get(c.inputKey)
 
