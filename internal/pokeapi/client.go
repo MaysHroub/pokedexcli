@@ -58,3 +58,36 @@ func (c *Client) GetLocationAreaResponse(pageUrl *string) (LocationAreaResponse,
 
 	return locAreaResp, nil
 }
+
+func (c *Client) GetPokemons(locationArea *string) ([]PokemonEncounters, error) {
+	url := BaseUrl + "/1"
+	if locationArea != nil {
+		url = BaseUrl + "/" + *locationArea
+	}
+
+	data, found := c.cache.Get(url)
+
+	if !found {
+		resp, err := c.instance.Get(url)
+		if err != nil {
+			return nil, fmt.Errorf("Failed to fetch pokemons: %w", err)
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("PokeAPI returned status code %d when fetching pokemons", resp.StatusCode)
+		}
+
+		data, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("Failed to read response body: %w", err)
+		}
+	}
+
+	var pokemonResp PokemonResponse
+	if err := json.Unmarshal(data, &pokemonResp); err != nil {
+		return nil, fmt.Errorf("Failed to parse json: %w", err)
+	}
+
+	return pokemonResp.PokemonEncounters, nil
+}

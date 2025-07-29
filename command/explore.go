@@ -8,14 +8,14 @@ import (
 func Explore(cfg *configuration.Config, locationName string) error {
 	client := cfg.HttpClient
 
-	pokemons := client.GetPokemons(locationName)
+	pokemonEncounters, err := client.GetPokemons(&locationName)
 
-	if pokemons == nil {
-		return fmt.Errorf("No pokemons returned. Invalid location name: %v", locationName)
+	if err != nil {
+		return err
 	}
 
-	for _, pokemon := range pokemons {
-		fmt.Println(pokemon.name)
+	for _, pokemonEnc := range pokemonEncounters {
+		fmt.Println(pokemonEnc.Pokemon.Name)
 	}
 
 	return nil
