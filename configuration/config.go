@@ -6,4 +6,5 @@ type Config struct {
 	HttpClient *pokeapi.Client
 	NextUrl    *string
 	PrevUrl    *string
+	Pokedex    map[string]pokeapi.PokemonInfo
 }

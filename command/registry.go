@@ -35,5 +35,10 @@ func GetCommands() map[string]CliCommand {
 			Description: "Displays all pokemon names in given location area",
 			Callback:    Explore,
 		},
+		"catch": CliCommand{
+			Name:        "catch <pokemon-name>",
+			Description: "Catches a pokemon given its name; the higher the base experience of the pokemon, the harder to catch",
+			Callback:    Catch,
+		},
 	}
 }

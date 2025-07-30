@@ -11,9 +11,11 @@ func main() {
 	cacheInterval := 15 * time.Second
 
 	httpClient := pokeapi.NewClient(timeout, cacheInterval)
+	pokedex := make(map[string]pokeapi.PokemonInfo)
 
 	cfg := configuration.Config{
 		HttpClient: &httpClient,
+		Pokedex:    pokedex,
 	}
 
 	startRepl(&cfg)
