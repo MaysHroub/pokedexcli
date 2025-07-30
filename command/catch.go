@@ -37,6 +37,7 @@ func Catch(cfg *configuration.Config, pokemonName string) error {
 	cfg.Pokedex[pokemonName] = pokemonInfo
 
 	fmt.Printf("%v was caught!\n", pokemonName)
+	fmt.Println("You can now inspect it with the inspect command")
 	return nil
 }
 

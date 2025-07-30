@@ -19,12 +19,12 @@ func Inspect(cfg *configuration.Config, pokemonName string) error {
 
 	fmt.Println("Stats:")
 	for _, stat := range pokemonInfo.Stats {
-		fmt.Printf("	-%v: %v\n", stat.Stat.Name, stat.BaseStat)
+		fmt.Printf("  - %v: %v\n", stat.Stat.Name, stat.BaseStat)
 	}
 
 	fmt.Println("Types:")
 	for _, typ := range pokemonInfo.Types {
-		fmt.Printf("	-%v\n", typ.Type.Name)
+		fmt.Printf("  - %v\n", typ.Type.Name)
 	}
 
 	return nil
