@@ -39,10 +39,16 @@ func GetCommands() map[string]CliCommand {
 			Name:        "catch <pokemon-name>",
 			Description: "Catches a pokemon; the higher the base experience of the pokemon, the harder to catch",
 			Callback:    Catch,
-		}, "inspect": {
+		},
+		"inspect": {
 			Name:        "inspect <pokemon-name>",
 			Description: "Displays name, height, weight, stats, and type(s) of the caught pokemon",
 			Callback:    Inspect,
+		},
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "Displays name of caught pokemons",
+			Callback:    Pokedex,
 		},
 	}
 }
