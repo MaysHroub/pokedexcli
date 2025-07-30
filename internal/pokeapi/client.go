@@ -25,109 +25,36 @@ func NewClient(timeout, cacheInterval time.Duration) Client {
 	}
 }
 
-func (c *Client) GetLocationAreaResponse(pageUrl *string) (LocationAreaResponse, error) {
-	url := BaseUrl + "/location-area"
-	if pageUrl != nil {
-		url = *pageUrl
+func FetchData[T any](c *Client, url *string) (result T, err error) {
+
+	if url == nil {
+		return result, fmt.Errorf("failed to make request; empty url")
 	}
 
-	// check if the url is cached
-	data, found := c.cache.Get(url)
+	data, exists := c.cache.Get(*url)
 
-	if !found {
-		resp, err := c.instance.Get(url)
+	if !exists {
+		resp, err := c.instance.Get(*url)
 		if err != nil {
-			return LocationAreaResponse{}, fmt.Errorf("Failed to fetch location area response: %w", err)
+			return result, fmt.Errorf("failed to GET %v: %w", *url, err)
 		}
 		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
-			return LocationAreaResponse{}, fmt.Errorf("PokeAPI returned status code %d when fetching location area response", resp.StatusCode)
+			return result, fmt.Errorf("bad status %v returned", resp.StatusCode)
 		}
 
 		data, err = io.ReadAll(resp.Body)
 		if err != nil {
-			return LocationAreaResponse{}, fmt.Errorf("Failed to read response body: %w", err)
+			return result, fmt.Errorf("failed to read response body: %w", err)
 		}
 	}
 
-	var locAreaResp LocationAreaResponse
-	if err := json.Unmarshal(data, &locAreaResp); err != nil {
-		return LocationAreaResponse{}, fmt.Errorf("Failed to parse json: %w", err)
+	if err := json.Unmarshal(data, &result); err != nil {
+		return result, fmt.Errorf("failed to decode response body: %w", err)
 	}
 
-	return locAreaResp, nil
-}
+	c.cache.Add(*url, data)
 
-func (c *Client) GetPokemons(locationAreaNameOrId string) ([]Pokemon, error) {
-	url := BaseUrl + "/location-area/1"
-	if locationAreaNameOrId != "" {
-		url = BaseUrl + "/location-area/" + locationAreaNameOrId
-	}
-
-	data, found := c.cache.Get(url)
-
-	if !found {
-		resp, err := c.instance.Get(url)
-		if err != nil {
-			return nil, fmt.Errorf("Failed to fetch pokemons: %w", err)
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			return nil, fmt.Errorf("PokeAPI returned status code %d when fetching pokemons", resp.StatusCode)
-		}
-
-		data, err = io.ReadAll(resp.Body)
-		if err != nil {
-			return nil, fmt.Errorf("Failed to read response body: %w", err)
-		}
-	}
-
-	var pokemonResp PokemonResponse
-	if err := json.Unmarshal(data, &pokemonResp); err != nil {
-		return nil, fmt.Errorf("Failed to parse json: %w", err)
-	}
-
-	pokemons := make([]Pokemon, len(pokemonResp.PokemonEncounters))
-
-	for i, pokeEnc := range pokemonResp.PokemonEncounters {
-		pokemons[i] = pokeEnc.Pokemon
-	}
-
-	return pokemons, nil
-}
-
-func (c *Client) GetPokemonInfo(pokemonName string) (PokemonInfo, error) {
-	url := BaseUrl + "/pokemon/" + pokemonName
-
-	if pokemonName == "" {
-		return PokemonInfo{}, fmt.Errorf("No pokemon name given")
-	}
-
-	data, found := c.cache.Get(url)
-
-	if !found {
-		resp, err := c.instance.Get(url)
-		if err != nil {
-			return PokemonInfo{}, fmt.Errorf("Failed to fetch pokemon's info: %w", err)
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			return PokemonInfo{}, fmt.Errorf("PokeAPI returned status code %d when fetching pokemon's info", resp.StatusCode)
-		}
-
-		data, err = io.ReadAll(resp.Body)
-		if err != nil {
-			return PokemonInfo{}, fmt.Errorf("Failed to read response body: %w", err)
-		}
-	}
-
-	var pokemonInfo PokemonInfo
-	if err := json.Unmarshal(data, &pokemonInfo); err != nil {
-		return PokemonInfo{}, fmt.Errorf("Failed to parse json: %w", err)
-	}
-
-	return pokemonInfo, nil
+	return result, nil
 }

@@ -3,13 +3,18 @@ package command
 import (
 	"fmt"
 	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/internal/pokeapi"
 )
 
 func MapPrev(cfg *configuration.Config, param string) error {
-	httpClient := cfg.HttpClient
+	client := cfg.HttpClient
 
-	locationAreaResp, err := httpClient.GetLocationAreaResponse(cfg.PrevUrl)
+	if cfg.PrevUrl == nil {
+		url := pokeapi.BaseUrl + "/location-area"
+		cfg.PrevUrl = &url
+	}
 
+	locationAreaResp, err := pokeapi.FetchData[pokeapi.LocationAreaResponse](client, cfg.PrevUrl)
 	if err != nil {
 		return err
 	}
