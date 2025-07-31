@@ -53,8 +53,9 @@ func Catch(cfg *config.Config, pokemonName string) error {
 // using exponential decay
 func getCatchChance(baseExperience int) float64 {
 	const baseChance = 0.8
-	const decayConstant = 0.8 // or lambda
+	const decayConstant = 0.7 // or lambda
+	scaled_exp := (float64(baseExperience) - 30.0) * 0.01754
 
-	catchChance := baseChance * math.Pow(math.E, -float64(decayConstant)*float64(baseExperience)/100.0)
+	catchChance := baseChance * math.Pow(math.E, -float64(decayConstant)*scaled_exp)
 	return catchChance
 }
