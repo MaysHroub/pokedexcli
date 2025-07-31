@@ -1,6 +1,6 @@
 # Pokédex CLI  <img width="32" height="32" alt="pokeball" src="https://github.com/user-attachments/assets/7b6866a8-3154-48bb-aced-3817c2879c0a" />
 
-Pokédex CLI is a command-line application written in Go that allows users to explore regions, catch Pokémons, inspect their details, and view all caught Pokémons. It was developed as part of the 'Build a Pokédex' project in the **Backend Developer path** on [Boot.dev](https://www.boot.dev/).
+Pokédex CLI is a command-line (REPL) application written in Go that allows users to explore regions, catch Pokémons, inspect their details, and view all caught Pokémons. It was developed as part of the 'Build a Pokédex' project in the **Backend Developer path** on [Boot.dev](https://www.boot.dev/).
 
 The app interacts with **[PokéAPI](https://pokeapi.co/)** to retreive up-to-date Pokémon data and supports smart caching for API responses to improve performance.
 
