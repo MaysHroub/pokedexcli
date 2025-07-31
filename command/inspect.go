@@ -6,6 +6,11 @@ import (
 )
 
 func Inspect(cfg *config.Config, pokemonName string) error {
+	if pokemonName == "" {
+		fmt.Println("Please provide a pokemon name")
+		return nil
+	}
+
 	pokemonInfo, exists := cfg.Pokedex[pokemonName]
 
 	if !exists {

@@ -7,6 +7,11 @@ import (
 )
 
 func Explore(cfg *config.Config, locationName string) error {
+	if locationName == "" {
+		fmt.Println("Please provide a location name")
+		return nil
+	}
+
 	client := cfg.HttpClient
 
 	url := pokeapi.BaseUrl + "/location-area/" + locationName

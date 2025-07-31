@@ -3,6 +3,7 @@ package main
 import (
 	"github/MaysHroub/pokedexcli/config"
 	"github/MaysHroub/pokedexcli/internal/pokeapi"
+	"github/MaysHroub/pokedexcli/repl"
 	"time"
 )
 
@@ -18,5 +19,5 @@ func main() {
 		Pokedex:    pokedex,
 	}
 
-	startRepl(&cfg)
+	repl.StartRepl(&cfg)
 }

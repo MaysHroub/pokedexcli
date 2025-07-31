@@ -1,4 +1,4 @@
-package main
+package repl
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func startRepl(cfg *config.Config) {
+func StartRepl(cfg *config.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
