@@ -2,11 +2,11 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"os"
 )
 
-func Exit(c *configuration.Config, param string) error {
+func Exit(c *config.Config, param string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil

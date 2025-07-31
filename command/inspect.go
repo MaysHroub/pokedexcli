@@ -2,10 +2,10 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 )
 
-func Inspect(cfg *configuration.Config, pokemonName string) error {
+func Inspect(cfg *config.Config, pokemonName string) error {
 	pokemonInfo, exists := cfg.Pokedex[pokemonName]
 
 	if !exists {

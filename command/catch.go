@@ -2,14 +2,14 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"github/MaysHroub/pokedexcli/internal/pokeapi"
 	"math"
 	"math/rand"
 	"time"
 )
 
-func Catch(cfg *configuration.Config, pokemonName string) error {
+func Catch(cfg *config.Config, pokemonName string) error {
 	if pokemonName == "" {
 		fmt.Println("Please provide a pokemon name")
 		return nil

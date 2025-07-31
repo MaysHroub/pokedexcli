@@ -2,11 +2,11 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"github/MaysHroub/pokedexcli/internal/pokeapi"
 )
 
-func Explore(cfg *configuration.Config, locationName string) error {
+func Explore(cfg *config.Config, locationName string) error {
 	client := cfg.HttpClient
 
 	url := pokeapi.BaseUrl + "/location-area/" + locationName

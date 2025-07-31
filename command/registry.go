@@ -1,11 +1,11 @@
 package command
 
-import "github/MaysHroub/pokedexcli/configuration"
+import "github/MaysHroub/pokedexcli/config"
 
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(c *configuration.Config, param string) error
+	Callback    func(c *config.Config, param string) error
 }
 
 func GetCommands() map[string]CliCommand {

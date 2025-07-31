@@ -2,10 +2,10 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 )
 
-func Help(c *configuration.Config, param string) error {
+func Help(c *config.Config, param string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println()

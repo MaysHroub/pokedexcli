@@ -2,11 +2,11 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"github/MaysHroub/pokedexcli/internal/pokeapi"
 )
 
-func MapPrev(cfg *configuration.Config, param string) error {
+func MapPrev(cfg *config.Config, param string) error {
 	client := cfg.HttpClient
 
 	if cfg.PrevUrl == nil {

@@ -2,10 +2,10 @@ package command
 
 import (
 	"fmt"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 )
 
-func Pokedex(cfg *configuration.Config, param string) error {
+func Pokedex(cfg *config.Config, param string) error {
 	if len(cfg.Pokedex) == 0 {
 		fmt.Println("You haven't caught any pokemons yet")
 		return nil

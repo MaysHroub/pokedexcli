@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"github/MaysHroub/pokedexcli/internal/pokeapi"
 	"time"
 )
@@ -13,7 +13,7 @@ func main() {
 	httpClient := pokeapi.NewClient(timeout, cacheInterval)
 	pokedex := make(map[string]pokeapi.PokemonInfo)
 
-	cfg := configuration.Config{
+	cfg := config.Config{
 		HttpClient: &httpClient,
 		Pokedex:    pokedex,
 	}

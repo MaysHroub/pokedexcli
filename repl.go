@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"github/MaysHroub/pokedexcli/command"
-	"github/MaysHroub/pokedexcli/configuration"
+	"github/MaysHroub/pokedexcli/config"
 	"os"
 	"strings"
 )
 
-func startRepl(cfg *configuration.Config) {
+func startRepl(cfg *config.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
